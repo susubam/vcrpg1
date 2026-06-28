@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>사이버 방치형 RPG</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-wrap">
+    <h1>사이버 방치형 RPG</h1>
+
+    <div class="top-ui">
+      <div class="card">스테이지: <span id="stage">1</span> / 100</div>
+      <div class="card">레벨: <span id="playerLevel">1</span></div>
+      <div class="card">체력: <span id="playerHp">120</span> / <span id="playerMaxHp">120</span></div>
+      <div class="card">공격력: <span id="playerAttack">10</span></div>
+      <div class="card">경험치: <span id="playerExp">0</span> / <span id="needExp">100</span></div>
+      <div class="card">골드: <span id="gold">0</span></div>
+      <div class="card">진행도: <span id="stageKillCount">0</span> / <span id="stageKillGoal">10</span></div>
+    </div>
+
+    <canvas id="gameCanvas" width="900" height="450"></canvas>
+
+    <div class="bottom-ui">
+      <div class="control-bar">
+        <button id="upgradeBtn">공격력 강화</button>
+        <button id="speedToggleBtn" type="button">2배속 OFF</button>
+        <button id="skillModeToggleBtn" type="button">스킬 자동</button>
+      </div>
+      <p>강화 비용: <span id="upgradeCost">50</span> 골드</p>
+      <p>총 처치한 적: <span id="killCount">0</span></p>
+
+      <div class="skill-bar" aria-label="스킬">
+        <div id="spinSkillIcon" class="skill-icon ready" title="회전 베기"></div>
+        <div id="lightningSkillIcon" class="skill-icon locked" title="10레벨 해금"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

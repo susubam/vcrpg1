@@ -1,0 +1,155 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #151515;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.game-wrap {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 16px;
+}
+
+h1 {
+  text-align: center;
+  color: #ffd166;
+}
+
+.top-ui {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card,
+.bottom-ui {
+  background: #242424;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  background: #6bbf59;
+  border: 2px solid #4d7a52;
+  border-radius: 12px;
+}
+
+.bottom-ui {
+  margin-top: 12px;
+}
+
+.control-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.skill-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.skill-icon {
+  --cooldown: 0;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  background: #111827;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.skill-icon.manual {
+  cursor: pointer;
+}
+
+.skill-icon.manual:hover {
+  border-color: #93c5fd;
+}
+
+.skill-icon::before,
+.skill-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.skill-icon::after {
+  inset: auto 0 0;
+  left: 0;
+  top: auto;
+  height: calc(var(--cooldown) * 100%);
+  background: rgba(0, 0, 0, 0.58);
+  transition: height 0.15s linear;
+  z-index: 2;
+}
+
+.skill-icon.ready {
+  border-color: #facc15;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 0 12px rgba(250, 204, 21, 0.25);
+}
+
+.skill-icon.locked {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+#spinSkillIcon::before {
+  width: 24px;
+  height: 24px;
+  border-top: 4px solid #fde68a;
+  border-right: 4px solid #fde68a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(38deg);
+}
+
+#lightningSkillIcon::before {
+  width: 14px;
+  height: 26px;
+  background: #38bdf8;
+  clip-path: polygon(58% 0, 100% 0, 66% 42%, 100% 42%, 32% 100%, 46% 55%, 0 55%);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+}
+
+button {
+  padding: 12px 24px;
+  background: #80afcb;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #9ed0f0;
+}
+
+button.active {
+  background: #ffd166;
+}
+
+@media (max-width: 760px) {
+  .top-ui {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
