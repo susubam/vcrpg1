@@ -3,40 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>사이버 방치형 RPG</title>
+  <title>게임회사 키우기</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="game-wrap">
-    <h1 class="sr-only">사이버 방치형 RPG</h1>
+    <h1 class="sr-only">게임회사 키우기</h1>
 
     <div class="game-panel">
       <canvas id="gameCanvas" width="900" height="450"></canvas>
 
       <div class="top-ui">
-        <div class="card">STAGE <span id="stage">1</span>/100</div>
-        <div class="card">LV <span id="playerLevel">1</span></div>
-        <div class="card">HP <span id="playerHp">120</span>/<span id="playerMaxHp">120</span></div>
-        <div class="card">ATK <span id="playerAttack">10</span></div>
-        <div class="card">EXP <span id="playerExp">0</span>/<span id="needExp">100</span></div>
-        <div class="card">G <span id="gold">0</span></div>
-        <div class="card">KILL <span id="stageKillCount">0</span>/<span id="stageKillGoal">10</span></div>
-        <div class="card">TOTAL <span id="killCount">0</span></div>
+        <div class="card battle-stat">STAGE <span id="stage">1</span>/100</div>
+        <div class="card common-stat">LV <span id="playerLevel">1</span></div>
+        <div class="card battle-only-stat">HP <span id="playerHp">120</span>/<span id="playerMaxHp">120</span></div>
+        <div class="card battle-only-stat">ATK <span id="playerAttack">10</span></div>
+        <div class="card common-stat">EXP <span id="playerExp">0</span>/<span id="needExp">100</span></div>
+        <div class="card common-stat">G <span id="gold">0</span></div>
+        <div class="card">직원수 <span id="employeeCount">0</span>/<span id="maxEmployeeCount">5</span></div>
+        <div class="card battle-stat">TASK <span id="stageKillCount">0</span>/<span id="stageKillGoal">10</span></div>
+        <div class="card battle-stat">DONE <span id="killCount">0</span></div>
+        <div class="card company-stat">회사 레벨 <span id="companyIncome">1</span></div>
+        <div class="card company-stat">투자 단계 <span id="companyWorkTime">0</span></div>
+        <div class="card summon-stat">직원 채용 <span id="companionCost">120</span>G</div>
+        <div class="card summon-stat">최근 직원 <span id="latestCompanion">없음</span></div>
+        <div class="card companion-stat">직원 <span id="companionUnlockCount">0</span>/<span id="companionTotalCount">5</span></div>
+        <div class="card companion-stat">총 채용 <span id="companionCount">0</span>명</div>
+        <div class="card investment-stat">투자 총합 <span id="investmentTotalLevel">0</span></div>
+        <div class="card investment-stat">다음 비용 <span id="investmentNextCost">0</span>G</div>
       </div>
 
       <div class="bottom-ui">
-        <button id="upgradeBtn" class="action-icon upgrade-icon" type="button" title="공격력 강화" aria-label="공격력 강화">
+        <button id="upgradeBtn" class="action-icon upgrade-icon legacy-hidden" type="button" title="개발력 강화" aria-label="개발력 강화">
           <span class="upgrade-cost"><span id="upgradeCost">50</span></span>
         </button>
 
-        <div class="control-bar">
+        <div class="control-bar battle-controls">
           <button id="speedToggleBtn" type="button">2배속 OFF</button>
           <button id="skillModeToggleBtn" type="button">스킬 자동</button>
         </div>
 
-        <div class="skill-bar" aria-label="스킬">
+        <div class="company-controls">
+          <div class="company-badge">회사 운영 현황</div>
+        </div>
+
+        <div class="summon-controls staff-only">
+          <button id="summonCompanionBtn" class="summon-btn" type="button">직원 채용</button>
+        </div>
+
+        <div class="companion-controls">
+          <div class="company-badge">직원 승급 관리</div>
+        </div>
+
+        <div class="investment-controls">
+          <div class="company-badge">투자 항목을 선택하세요</div>
+        </div>
+
+        <div class="skill-bar battle-controls" aria-label="스킬">
           <div id="spinSkillIcon" class="skill-icon ready" title="회전 베기"></div>
           <div id="lightningSkillIcon" class="skill-icon locked" title="10레벨 해금"></div>
+        </div>
+
+        <nav class="tab-bar" aria-label="화면 전환">
+          <button id="companyTabBtn" class="tab-btn" type="button">회사관리</button>
+          <button id="battleTabBtn" class="tab-btn active" type="button">개발</button>
+          <button id="summonTabBtn" class="tab-btn" type="button">직원</button>
+          <button id="investmentTabBtn" class="tab-btn" type="button">투자</button>
+          <button id="companionTabBtn" class="tab-btn" type="button">인사 관리</button>
+        </nav>
+
+        <div class="legacy-hidden" aria-hidden="true">
+          <span id="equipmentCost">160</span>
+          <span id="latestEquipment">없음</span>
+          <button id="summonEquipmentBtn" type="button"></button>
+          <button id="summonCompanionModeBtn" type="button"></button>
+          <button id="summonEquipmentModeBtn" type="button"></button>
+          <button id="codexCompanionModeBtn" type="button"></button>
+          <button id="codexEquipmentModeBtn" type="button"></button>
         </div>
       </div>
     </div>

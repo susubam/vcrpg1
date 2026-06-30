@@ -5,8 +5,10 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background: #111827;
-  color: white;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(75, 97, 142, 0.34), transparent 42%),
+    #1a2030;
+  color: #f8fafc;
   font-family: "Arial Black", Arial, sans-serif;
 }
 
@@ -19,6 +21,10 @@ body {
   white-space: nowrap;
 }
 
+.legacy-hidden {
+  display: none;
+}
+
 .game-wrap {
   width: min(960px, 100vw);
   margin: 0 auto;
@@ -28,16 +34,30 @@ body {
 .game-panel {
   position: relative;
   overflow: hidden;
-  border: 4px solid #172554;
+  border: 4px solid #151923;
   border-radius: 8px;
-  background: #22c3ef;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+  background: #242a3a;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.46),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+}
+
+.game-panel.company-view {
+  border-color: #111827;
+  background: #242a3a;
+}
+
+.game-panel.summon-view,
+.game-panel.investment-view,
+.game-panel.companion-view {
+  border-color: #111827;
+  background: #2c2532;
 }
 
 canvas {
   display: block;
   width: 100%;
-  background: #6bbf59;
+  background: #252b3b;
   image-rendering: pixelated;
 }
 
@@ -57,10 +77,10 @@ canvas {
 .card {
   min-height: 28px;
   padding: 4px 8px;
-  border: 2px solid rgba(15, 23, 42, 0.86);
+  border: 2px solid rgba(8, 11, 18, 0.94);
   border-radius: 4px;
-  background: rgba(15, 23, 42, 0.62);
-  color: #ffffff;
+  background: linear-gradient(180deg, rgba(48, 54, 70, 0.92), rgba(22, 26, 38, 0.92));
+  color: #f8fafc;
   font-size: 12px;
   line-height: 1.2;
   text-align: center;
@@ -73,7 +93,7 @@ canvas {
 }
 
 .card span {
-  color: #fde68a;
+  color: #ffd45a;
 }
 
 .bottom-ui {
@@ -83,11 +103,13 @@ canvas {
   right: 0;
   bottom: 0;
   display: grid;
-  grid-template-columns: 88px 1fr 132px;
+  grid-template-columns: 64px minmax(170px, 1fr) 104px;
+  grid-template-rows: auto auto;
   align-items: end;
   gap: 10px;
   padding: 0 12px 12px;
-  background: linear-gradient(0deg, rgba(17, 24, 39, 0.62), rgba(17, 24, 39, 0));
+  background:
+    linear-gradient(0deg, rgba(13, 17, 27, 0.92), rgba(13, 17, 27, 0.72) 62%, rgba(13, 17, 27, 0));
 }
 
 .control-bar {
@@ -95,13 +117,15 @@ canvas {
   justify-content: center;
   gap: 8px;
   align-self: end;
+  min-width: 0;
+  transform: translateX(34px);
 }
 
 button {
-  border: 2px solid #172554;
+  border: 2px solid #111827;
   border-radius: 6px;
-  background: #80afcb;
-  color: #111827;
+  background: linear-gradient(180deg, #f6c64a, #b7791f);
+  color: #211807;
   font-weight: 900;
   cursor: pointer;
   box-shadow:
@@ -110,17 +134,17 @@ button {
 }
 
 button:hover {
-  background: #9ed0f0;
+  background: linear-gradient(180deg, #ffe08a, #d89424);
 }
 
 button.active {
-  background: #ffd166;
+  background: linear-gradient(180deg, #ffe08a, #f5b82e);
 }
 
 .control-bar button {
-  min-width: 84px;
-  padding: 8px 10px;
-  font-size: 12px;
+  min-width: 74px;
+  padding: 8px 8px;
+  font-size: 11px;
 }
 
 .action-icon,
@@ -129,9 +153,9 @@ button.active {
   width: 64px;
   height: 64px;
   overflow: hidden;
-  border: 3px solid #172554;
+  border: 3px solid #111827;
   border-radius: 6px;
-  background: #1f2937;
+  background: #202738;
   box-shadow:
     inset 0 0 0 3px rgba(255, 255, 255, 0.12),
     inset 0 -8px rgba(0, 0, 0, 0.22),
@@ -187,6 +211,155 @@ button.active {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.company-controls,
+.summon-controls,
+.investment-controls,
+.companion-controls {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.company-badge {
+  min-width: 142px;
+  padding: 9px 12px;
+  border: 2px solid #102033;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2f415e, #1b2537);
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+  box-shadow:
+    inset 0 -4px rgba(0, 0, 0, 0.16),
+    0 4px rgba(15, 23, 42, 0.35);
+}
+
+.summon-btn {
+  min-width: 142px;
+  padding: 11px 12px;
+  border-color: #111827;
+  background: linear-gradient(180deg, #ffda5a, #d98d24);
+  color: #211807;
+  font-size: 13px;
+}
+
+.summon-controls {
+  flex-direction: column;
+  gap: 7px;
+}
+
+.summon-controls.staff-only {
+  justify-content: center;
+}
+
+.summon-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  width: 162px;
+}
+
+.mini-tab {
+  min-height: 28px;
+  padding: 5px 8px;
+  border-color: #111827;
+  background: linear-gradient(180deg, #465169, #252d3f);
+  color: #f8fafc;
+  font-size: 11px;
+}
+
+.mini-tab.active {
+  background: linear-gradient(180deg, #ffda5a, #d98d24);
+  color: #211807;
+}
+
+.equipment-summon-btn {
+  display: none;
+  background: linear-gradient(180deg, #8fd3ff, #2776a7);
+  border-color: #111827;
+  color: #07121f;
+}
+
+.summon-controls.equipment-mode #summonCompanionBtn {
+  display: none;
+}
+
+.summon-controls.equipment-mode #summonEquipmentBtn {
+  display: block;
+}
+
+.tab-bar {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  min-height: 46px;
+}
+
+.tab-btn {
+  width: 100%;
+  min-height: 42px;
+  border-color: #111827;
+  background: linear-gradient(180deg, #45506a, #242b3b);
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.tab-btn.active {
+  background: linear-gradient(180deg, #ffd45a, #bd7a1f);
+  color: #211807;
+}
+
+.company-stat,
+.summon-stat,
+.investment-stat,
+.companion-stat {
+  display: none;
+}
+
+.game-panel.company-view .battle-stat,
+.game-panel.company-view .battle-only-stat,
+.game-panel.company-view .battle-controls,
+.game-panel.summon-view .battle-stat,
+.game-panel.summon-view .battle-only-stat,
+.game-panel.summon-view .battle-controls,
+.game-panel.investment-view .battle-stat,
+.game-panel.investment-view .battle-only-stat,
+.game-panel.investment-view .battle-controls,
+.game-panel.companion-view .battle-stat,
+.game-panel.companion-view .battle-only-stat,
+.game-panel.companion-view .battle-controls {
+  display: none;
+}
+
+.game-panel.company-view .company-stat,
+.game-panel.company-view .company-controls {
+  display: flex;
+}
+
+.game-panel.summon-view .summon-stat,
+.game-panel.summon-view .summon-controls {
+  display: flex;
+}
+
+.game-panel.investment-view .investment-stat,
+.game-panel.investment-view .investment-controls {
+  display: flex;
+}
+
+.game-panel.companion-view .companion-stat,
+.game-panel.companion-view .companion-controls {
+  display: flex;
+}
+
+.game-panel.company-view .company-stat,
+.game-panel.summon-view .summon-stat,
+.game-panel.investment-view .investment-stat,
+.game-panel.companion-view .companion-stat {
+  display: none;
 }
 
 .skill-icon {
@@ -272,7 +445,7 @@ button.active {
   }
 
   .bottom-ui {
-    grid-template-columns: 72px 1fr 112px;
+    grid-template-columns: 52px minmax(148px, 1fr) 92px;
     gap: 6px;
     padding: 0 8px 8px;
   }
@@ -286,11 +459,43 @@ button.active {
   .control-bar {
     flex-direction: column;
     gap: 5px;
+    transform: translateX(16px);
   }
 
   .control-bar button {
-    min-width: 76px;
-    padding: 6px 8px;
+    min-width: 66px;
+    padding: 6px 6px;
     font-size: 10px;
+  }
+
+  .company-badge {
+    min-width: 112px;
+    padding: 7px 8px;
+    font-size: 10px;
+  }
+
+  .summon-btn {
+    min-width: 104px;
+    padding: 8px;
+    font-size: 11px;
+  }
+
+  .summon-mode-tabs {
+    width: 124px;
+  }
+
+  .mini-tab {
+    min-height: 24px;
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+
+  .tab-bar {
+    min-height: 42px;
+  }
+
+  .tab-btn {
+    min-height: 38px;
+    font-size: 13px;
   }
 }
